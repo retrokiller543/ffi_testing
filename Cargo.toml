@@ -1,0 +1,19 @@
+[package]
+name = "ffi_lib"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ffi = {version = "*", optional = true}
+robusta_jni = { version = "0.2", optional = true }
+pyo3 = { version = "0.21", features = ["extension-module", "multiple-pymethods"], optional = true }
+pyo3-helper-macros ={ version = "*", optional = true }
+
+[features]
+default = ["c-ffi", "pyo3"]
+jni = ["dep:robusta_jni"]
+c-ffi = ["dep:ffi"]
+pyo3 = ["dep:pyo3", "dep:pyo3-helper-macros"]
