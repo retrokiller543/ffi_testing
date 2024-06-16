@@ -2,10 +2,8 @@
 #include "ffi_lib.h"
 
 int main() {
-    init_logger();
     benchmark_rust();
     benchmark_rust_async();
-
     {
         vec4* vecA;
         vec4* vecACopy;
@@ -48,12 +46,11 @@ int main() {
         vec4_destroy(&vecACopy);
         vec4_destroy(&vecB);
     }
-
     #ifdef __cplusplus
     {
         Vec4 vecA = Vec4::New(1.0f, 2.0f, 3.0f, 4.0f);
         Vec4 vecB = Vec4::New(4.0f, 3.0f, 2.0f, 1.0f);
-        float dot_product = vecA.Dot(*vecB.Context());
+        float dot_product = vecA.Dot(vecB.Context());
         printf("Dot product of vecA and vecB: %f\n", dot_product);
     }
     #endif

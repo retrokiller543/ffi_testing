@@ -13,7 +13,7 @@ fn bindings_c() -> Result<(), Error> {
         },
         ffi_lib::interop::my_inventory(),
     )
-    .write_file("bindings/c/ffi_lib.h")?;
+    .write_file("bindings/c/ffi_lib.hpp")?;
 
     Ok(())
 }

@@ -1,0 +1,3 @@
+/home/tosic-killer/RustroverProjects/ffi_testing/bindings/c/cmake-build-default/CMakeFiles/program.dir
+/home/tosic-killer/RustroverProjects/ffi_testing/bindings/c/cmake-build-default/CMakeFiles/edit_cache.dir
+/home/tosic-killer/RustroverProjects/ffi_testing/bindings/c/cmake-build-default/CMakeFiles/rebuild_cache.dir

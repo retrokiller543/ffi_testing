@@ -6,7 +6,7 @@ use interoptopus::ffi_function;
 use tokio::runtime::Runtime;
 use tokio::task;
 
-async fn async_benchmark() {
+async fn async_benchmark() -> f64 {
     const ITERATIONS: usize = 100_000;
     const THREADS: usize = 8;
 
@@ -39,18 +39,18 @@ async fn async_benchmark() {
     // Stop the clock
     let end = Instant::now();
 
-    println!("Rust (async with threads and AES encryption): {} seconds", (end - start).as_secs_f64());
+    //println!("Rust (async with threads and AES encryption): {} seconds", (end - start).as_secs_f64());
+    (end - start).as_secs_f64()
 }
 
 #[ffi_function]
 #[no_mangle]
-pub extern "C" fn benchmark_rust_async() {
+pub extern "C" fn benchmark_rust_async() -> f64 {
     // Create a new thread to run the async function
     let handle = thread::spawn(|| {
-        let rt = Runtime::new().unwrap();
-        rt.block_on(async_benchmark());
+        Runtime::new().unwrap().block_on(async_benchmark())
     });
 
     // Wait for the thread to finish
-    handle.join().unwrap();
+    handle.join().unwrap()
 }

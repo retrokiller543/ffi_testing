@@ -42,10 +42,11 @@ build-java-lib:
     mkdir -p {{BINDINGS_DIR}}/src/com/example
     cargo test --features "c-ffi interoptopus" --release
     cargo build --features "c-ffi interoptopus" --release
-    swig -java -package com.example -outdir {{BINDINGS_DIR}}/src/com/example -o {{BINDINGS_DIR}}/ffi_lib_wrap.c {{BINDINGS_DIR}}/ffi_lib.i
-    gcc -shared -O3 -o {{BINDINGS_DIR}}/libffi_lib.so {{BINDINGS_DIR}}/ffi_lib_wrap.c -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin -L./target/release -lffi_lib
+    swig -c++ -java -package com.example -outdir {{BINDINGS_DIR}}/src/com/example -o {{BINDINGS_DIR}}/ffi_lib_wrap.c {{BINDINGS_DIR}}/ffi_lib.i
+    g++ -shared -O3 -o {{BINDINGS_DIR}}/libffi_lib_jni.so {{BINDINGS_DIR}}/ffi_lib_wrap.c -I$JAVA_HOME/include -I$JAVA_HOME/include/linux -L./target/release -lffi_lib -fPIC
 
 install-c:
+    @cargo build --release
     @sudo mkdir -p /usr/local/include
     @sudo mkdir -p /usr/local/lib
     @sudo cp {{BINDINGS_DIR}}/ffi_lib.h /usr/local/include/
@@ -57,3 +58,8 @@ install-c:
         sudo cp target/release/ffi_lib.dll /usr/local/lib/; \
     fi
     @sudo ldconfig
+
+compile-c-bindings:
+    @mkdir -p {{BINDINGS_DIR}}/out
+    @g++ -DDEFINE_FFI -DDEFINE_INTEROPTOPUS -O3 -c {{BINDINGS_DIR}}/main.c -o {{BINDINGS_DIR}}/out/ffi_lib.o
+    @g++ -O9 -L./target/release -o {{BINDINGS_DIR}}/out/ffi_lib {{BINDINGS_DIR}}/out/ffi_lib.o -lffi_lib

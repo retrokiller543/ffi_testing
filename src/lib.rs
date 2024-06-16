@@ -55,7 +55,7 @@ pub extern "C" fn vec3_new(x: i32, y: i32, z: i32) -> *mut Vec3 {
 
 #[ffi_function]
 #[no_mangle]
-pub extern "C" fn benchmark_rust() {
+pub extern "C" fn benchmark_rust() -> f64 {
     const ITERATIONS: usize = 100_000;
 
     // AES encryption key and data
@@ -75,7 +75,8 @@ pub extern "C" fn benchmark_rust() {
     // Stop the clock
     let end = Instant::now();
 
-    println!("Rust (single-threaded with AES encryption): {} seconds", (end - start).as_secs_f64());
+    //println!("Rust (single-threaded with AES encryption): {} seconds", );
+    (end - start).as_secs_f64()
 }
 
 #[ffi(from_ptr, self_ty = "*mut Vec3")]

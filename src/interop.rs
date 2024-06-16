@@ -65,7 +65,7 @@ impl SimpleService {
     }
 }
 
-#[ffi_type(opaque, namespace = "interoptopus")]
+#[ffi_type(opaque)]
 #[repr(C)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec4 {
@@ -87,6 +87,46 @@ impl Vec4 {
     pub fn dot(&self, other: &Vec4) -> f32 {
         info!("Vec4::dot({:?}, {:?})", self, other);
         self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn get_x(&self) -> f32 {
+        self.x
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn get_y(&self) -> f32 {
+        self.y
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn get_z(&self) -> f32 {
+        self.z
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn get_w(&self) -> f32 {
+        self.w
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn set_x(&mut self, value: f32) {
+        self.x = value;
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn set_y(&mut self, value: f32) {
+        self.y = value;
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn set_z(&mut self, value: f32) {
+        self.z = value;
+    }
+
+    #[ffi_service_method(on_panic = "return_default")]
+    pub fn set_w(&mut self, value: f32) {
+        self.w = value;
     }
 }
 

@@ -25,6 +25,14 @@ def init_lib(path):
     c_lib.vec4_destroy.argtypes = [ctypes.POINTER(ctypes.c_void_p)]
     c_lib.vec4_new.argtypes = [ctypes.POINTER(ctypes.c_void_p), ctypes.c_float, ctypes.c_float, ctypes.c_float, ctypes.c_float]
     c_lib.vec4_dot.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+    c_lib.vec4_get_x.argtypes = [ctypes.c_void_p]
+    c_lib.vec4_get_y.argtypes = [ctypes.c_void_p]
+    c_lib.vec4_get_z.argtypes = [ctypes.c_void_p]
+    c_lib.vec4_get_w.argtypes = [ctypes.c_void_p]
+    c_lib.vec4_set_x.argtypes = [ctypes.c_void_p, ctypes.c_float]
+    c_lib.vec4_set_y.argtypes = [ctypes.c_void_p, ctypes.c_float]
+    c_lib.vec4_set_z.argtypes = [ctypes.c_void_p, ctypes.c_float]
+    c_lib.vec4_set_w.argtypes = [ctypes.c_void_p, ctypes.c_float]
     c_lib.init_logger.argtypes = []
 
     c_lib.my_function.restype = Vec2
@@ -34,11 +42,17 @@ def init_lib(path):
     c_lib.dot.restype = ctypes.c_int32
     c_lib.cross.restype = Vec3
     c_lib.normalize.restype = Vec3
+    c_lib.benchmark_rust.restype = ctypes.c_double
+    c_lib.benchmark_rust_async.restype = ctypes.c_double
     c_lib.simple_service_destroy.restype = ctypes.c_int
     c_lib.simple_service_new_with.restype = ctypes.c_int
     c_lib.vec4_destroy.restype = ctypes.c_int
     c_lib.vec4_new.restype = ctypes.c_int
     c_lib.vec4_dot.restype = ctypes.c_float
+    c_lib.vec4_get_x.restype = ctypes.c_float
+    c_lib.vec4_get_y.restype = ctypes.c_float
+    c_lib.vec4_get_z.restype = ctypes.c_float
+    c_lib.vec4_get_w.restype = ctypes.c_float
 
     c_lib.simple_service_destroy.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
     c_lib.simple_service_new_with.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
@@ -71,10 +85,10 @@ def normalize(slf: ctypes.POINTER(Vec3)) -> Vec3:
 def hello(name: ctypes.POINTER(ctypes.c_int8)):
     return c_lib.hello(name)
 
-def benchmark_rust():
+def benchmark_rust() -> float:
     return c_lib.benchmark_rust()
 
-def benchmark_rust_async():
+def benchmark_rust_async() -> float:
     return c_lib.benchmark_rust_async()
 
 def init_logger():
@@ -256,6 +270,38 @@ class Vec4:
     def dot(self, other: ctypes.c_void_p) -> float:
         """"""
         return c_lib.vec4_dot(self._ctx, other)
+
+    def get_x(self, ) -> float:
+        """"""
+        return c_lib.vec4_get_x(self._ctx, )
+
+    def get_y(self, ) -> float:
+        """"""
+        return c_lib.vec4_get_y(self._ctx, )
+
+    def get_z(self, ) -> float:
+        """"""
+        return c_lib.vec4_get_z(self._ctx, )
+
+    def get_w(self, ) -> float:
+        """"""
+        return c_lib.vec4_get_w(self._ctx, )
+
+    def set_x(self, value: float):
+        """"""
+        return c_lib.vec4_set_x(self._ctx, value)
+
+    def set_y(self, value: float):
+        """"""
+        return c_lib.vec4_set_y(self._ctx, value)
+
+    def set_z(self, value: float):
+        """"""
+        return c_lib.vec4_set_z(self._ctx, value)
+
+    def set_w(self, value: float):
+        """"""
+        return c_lib.vec4_set_w(self._ctx, value)
 
 
 

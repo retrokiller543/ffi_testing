@@ -1,0 +1,4 @@
+/home/tosic-killer/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MAKE_PROGRAM=/home/tosic-killer/.local/share/JetBrains/Toolbox/apps/clion/bin/ninja/linux/x64/ninja -G Ninja -S /home/tosic-killer/RustroverProjects/ffi_testing/bindings/c -B /home/tosic-killer/RustroverProjects/ffi_testing/bindings/c/cmake-build-relwithdebinfo
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/tosic-killer/RustroverProjects/ffi_testing/bindings/c/cmake-build-relwithdebinfo

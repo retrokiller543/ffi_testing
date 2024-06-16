@@ -58,9 +58,9 @@ vec3 normalize(vec3* slf);
 
 void hello(const int8_t* name);
 
-void benchmark_rust();
+double benchmark_rust();
 
-void benchmark_rust_async();
+double benchmark_rust_async();
 
 /// Destroys the given instance.
 ///
@@ -83,6 +83,22 @@ ffierror vec4_destroy(vec4** context);
 ffierror vec4_new(vec4** context, float x, float y, float z, float w);
 
 float vec4_dot(const vec4* context, const vec4* other);
+
+float vec4_get_x(const vec4* context);
+
+float vec4_get_y(const vec4* context);
+
+float vec4_get_z(const vec4* context);
+
+float vec4_get_w(const vec4* context);
+
+void vec4_set_x(vec4* context, float value);
+
+void vec4_set_y(vec4* context, float value);
+
+void vec4_set_z(vec4* context, float value);
+
+void vec4_set_w(vec4* context, float value);
 
 void init_logger();
 
