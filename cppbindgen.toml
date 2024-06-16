@@ -14,10 +14,11 @@ include = ["ffi_lib"]
 crates = ["ffi_lib"]
 all_features = false
 default_features = false
-features = ["c-ffi"]
+features = ["c-ffi", "interoptopus"]
 
 [defines]
 "feature = c-ffi" = "DEFINE_FFI"
+"feature = interoptopus" = "DEFINE_INTEROPTOPUS"
 
 [struct]
 rename_fields = "None"

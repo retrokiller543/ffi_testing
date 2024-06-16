@@ -11,17 +11,105 @@
 namespace ffi {
 #endif // __cplusplus
 
+typedef enum FFIError {
+  Ok = 0,
+  Null = 100,
+  Panic = 200,
+  Fail = 300,
+} FFIError;
+
+/**
+ * A basic vector 3 in our FFI layer using integers.
+ */
 typedef struct Vec3 {
   int32_t x;
   int32_t y;
   int32_t z;
 } Vec3;
 
+#if defined(DEFINE_INTEROPTOPUS)
+/**
+ * A simple type in our FFI layer.
+ */
+typedef struct Vec2 {
+  float x;
+  float y;
+} Vec2;
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+typedef struct SimpleService {
+
+} SimpleService;
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+typedef struct Vec4 {
+  float x;
+  float y;
+  float z;
+  float w;
+} Vec4;
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
+void init_logger(void);
+
 struct Vec3 *vec3_new(int32_t x, int32_t y, int32_t z);
+
+void benchmark_rust(void);
+
+#if defined(DEFINE_INTEROPTOPUS)
+/**
+ * Function using the type.
+ */
+struct Vec2 my_function(struct Vec2 input);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+void hello(const char *name);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+enum FFIError simple_service_new_with(struct SimpleService **context, uint32_t _some_value);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+/**
+ * Destroys the given instance.
+ *
+ * # Safety
+ *
+ * The passed parameter MUST have been created with the corresponding init function;
+ * passing any other value results in undefined behavior.
+ */
+enum FFIError simple_service_destroy(struct SimpleService **context);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+enum FFIError vec4_new(struct Vec4 **context, float x, float y, float z, float w);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+float vec4_dot(const struct Vec4 *context, const struct Vec4 *other);
+#endif
+
+#if defined(DEFINE_INTEROPTOPUS)
+/**
+ * Destroys the given instance.
+ *
+ * # Safety
+ *
+ * The passed parameter MUST have been created with the corresponding init function;
+ * passing any other value results in undefined behavior.
+ */
+enum FFIError vec4_destroy(struct Vec4 **context);
+#endif
+
+void benchmark_rust_async(void);
 
 int32_t add(struct Vec3 *slf, int32_t x, int32_t y, int32_t z);
 

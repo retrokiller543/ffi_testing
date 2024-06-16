@@ -27,7 +27,7 @@ void benchmark_c() {
     free(v2);
 }
 
-void benchmark_rust() {
+void benchmark_rust_from_c() {
     const int iterations = 1000000;
     Vec3 *v1 = vec3_new(1, 2, 3);
     Vec3 *v2 = vec3_new(4, 5, 6);
@@ -52,6 +52,8 @@ void benchmark_rust() {
 int main() {
     benchmark_c();
     benchmark_rust();
+    benchmark_rust_from_c();
+    hello("Emil");
     return 0;
 }
 #endif
