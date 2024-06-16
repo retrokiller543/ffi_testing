@@ -1,5 +1,5 @@
 [workspace]
-members = [".", "ffi"]
+members = [".", "ffi-proc-macro"]
 resolver = "2"
 
 [package]
@@ -11,7 +11,7 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-ffi = { path = "ffi", optional = true}
+ffi = { path = "ffi-proc-macro", optional = true}
 robusta_jni = { version = "0.2", optional = true }
 pyo3 = { version = "0.21", features = ["extension-module", "multiple-pymethods"], optional = true }
 pyo3-helper-macros ={ version = "*", optional = true }
