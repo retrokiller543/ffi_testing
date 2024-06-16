@@ -30,7 +30,7 @@ I have not looked at this yet but could possible do it in the future
 
 ### Python
 
-For python simply move the `ffi_lib.py`file to the directory where you want to use it.
+For python simply move the `ffi_lib.py` file to the directory where you want to use it.
 
 Before running any methods in the file you need to init the library by running:
 
