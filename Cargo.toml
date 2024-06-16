@@ -21,6 +21,7 @@ env_logger = "0.11.1"
 tokio = { version = "1.38.0", features = ["full"] }
 aes = "0.8"
 cipher = "0.4"
+interoptopus_custom_c_backend = { version = "*", path = "../interoptopus_custom_c_backend" }
 
 [features]
 default = ["c-ffi", "interoptopus"]
@@ -33,3 +34,4 @@ interoptopus = []
 interoptopus_backend_csharp = { version = "*"}
 interoptopus_backend_c = { version = "*"}
 interoptopus_backend_cpython = { version = "*"}
+interoptopus_custom_c_backend = { version = "*", path = "../interoptopus_custom_c_backend" }

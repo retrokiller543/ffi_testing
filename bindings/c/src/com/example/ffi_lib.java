@@ -13,21 +13,21 @@ public class ffi_lib {
     return new vec2(ffi_libJNI.my_function(vec2.getCPtr(input), input), true);
   }
 
-  public static vec3 vec3_new(SWIGTYPE_p_int32_t x, SWIGTYPE_p_int32_t y, SWIGTYPE_p_int32_t z) {
-    long cPtr = ffi_libJNI.vec3_new(SWIGTYPE_p_int32_t.getCPtr(x), SWIGTYPE_p_int32_t.getCPtr(y), SWIGTYPE_p_int32_t.getCPtr(z));
+  public static vec3 vec3_new(int x, int y, int z) {
+    long cPtr = ffi_libJNI.vec3_new(x, y, z);
     return (cPtr == 0) ? null : new vec3(cPtr, false);
   }
 
-  public static SWIGTYPE_p_int32_t add(vec3 slf, SWIGTYPE_p_int32_t x, SWIGTYPE_p_int32_t y, SWIGTYPE_p_int32_t z) {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.add(vec3.getCPtr(slf), slf, SWIGTYPE_p_int32_t.getCPtr(x), SWIGTYPE_p_int32_t.getCPtr(y), SWIGTYPE_p_int32_t.getCPtr(z)), true);
+  public static int add(vec3 slf, int x, int y, int z) {
+    return ffi_libJNI.add(vec3.getCPtr(slf), slf, x, y, z);
   }
 
-  public static SWIGTYPE_p_int32_t add_reverse_args(SWIGTYPE_p_int32_t x, SWIGTYPE_p_int32_t y, SWIGTYPE_p_int32_t z, vec3 slf) {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.add_reverse_args(SWIGTYPE_p_int32_t.getCPtr(x), SWIGTYPE_p_int32_t.getCPtr(y), SWIGTYPE_p_int32_t.getCPtr(z), vec3.getCPtr(slf), slf), true);
+  public static int add_reverse_args(int x, int y, int z, vec3 slf) {
+    return ffi_libJNI.add_reverse_args(x, y, z, vec3.getCPtr(slf), slf);
   }
 
-  public static SWIGTYPE_p_int32_t dot(vec3 slf, vec3 other) {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.dot(vec3.getCPtr(slf), slf, vec3.getCPtr(other), other), true);
+  public static int dot(vec3 slf, vec3 other) {
+    return ffi_libJNI.dot(vec3.getCPtr(slf), slf, vec3.getCPtr(other), other);
   }
 
   public static vec3 cross(vec3 slf, vec3 other) {
@@ -38,8 +38,8 @@ public class ffi_lib {
     return new vec3(ffi_libJNI.normalize(vec3.getCPtr(slf), slf), true);
   }
 
-  public static void hello(SWIGTYPE_p_int8_t name) {
-    ffi_libJNI.hello(SWIGTYPE_p_int8_t.getCPtr(name));
+  public static void hello(String name) {
+    ffi_libJNI.hello(name);
   }
 
   public static void benchmark_rust() {
@@ -54,8 +54,8 @@ public class ffi_lib {
     return ffierror.swigToEnum(ffi_libJNI.simple_service_destroy(SWIGTYPE_p_p_simpleservice.getCPtr(context)));
   }
 
-  public static ffierror simple_service_new_with(SWIGTYPE_p_p_simpleservice context, SWIGTYPE_p_uint32_t some_value) {
-    return ffierror.swigToEnum(ffi_libJNI.simple_service_new_with(SWIGTYPE_p_p_simpleservice.getCPtr(context), SWIGTYPE_p_uint32_t.getCPtr(some_value)));
+  public static ffierror simple_service_new_with(SWIGTYPE_p_p_simpleservice context, long some_value) {
+    return ffierror.swigToEnum(ffi_libJNI.simple_service_new_with(SWIGTYPE_p_p_simpleservice.getCPtr(context), some_value));
   }
 
   public static ffierror vec4_destroy(SWIGTYPE_p_p_vec4 context) {

@@ -65,7 +65,7 @@ impl SimpleService {
     }
 }
 
-#[ffi_type(opaque)]
+#[ffi_type(opaque, namespace = "interoptopus")]
 #[repr(C)]
 #[derive(Debug, Clone, PartialEq)]
 pub struct Vec4 {

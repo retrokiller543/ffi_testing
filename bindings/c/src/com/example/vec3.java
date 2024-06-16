@@ -48,28 +48,28 @@ public class vec3 {
     }
   }
 
-  public void setX(SWIGTYPE_p_int32_t value) {
-    ffi_libJNI.vec3_x_set(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(value));
+  public void setX(int value) {
+    ffi_libJNI.vec3_x_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_int32_t getX() {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.vec3_x_get(swigCPtr, this), true);
+  public int getX() {
+    return ffi_libJNI.vec3_x_get(swigCPtr, this);
   }
 
-  public void setY(SWIGTYPE_p_int32_t value) {
-    ffi_libJNI.vec3_y_set(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(value));
+  public void setY(int value) {
+    ffi_libJNI.vec3_y_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_int32_t getY() {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.vec3_y_get(swigCPtr, this), true);
+  public int getY() {
+    return ffi_libJNI.vec3_y_get(swigCPtr, this);
   }
 
-  public void setZ(SWIGTYPE_p_int32_t value) {
-    ffi_libJNI.vec3_z_set(swigCPtr, this, SWIGTYPE_p_int32_t.getCPtr(value));
+  public void setZ(int value) {
+    ffi_libJNI.vec3_z_set(swigCPtr, this, value);
   }
 
-  public SWIGTYPE_p_int32_t getZ() {
-    return new SWIGTYPE_p_int32_t(ffi_libJNI.vec3_z_get(swigCPtr, this), true);
+  public int getZ() {
+    return ffi_libJNI.vec3_z_get(swigCPtr, this);
   }
 
   public vec3() {

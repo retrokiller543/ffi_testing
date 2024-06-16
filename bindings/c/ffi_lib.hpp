@@ -90,80 +90,78 @@ void init_logger();
 class SimpleService
 {
     private:
-        simpleservice** _context;
-    public:
+    void* _context;
 
-        SimpleService() : _context(nullptr) {}
+    SimpleService() : _context(nullptr) {}
 
-        static SimpleService NewWith(unsigned int some_value)
+    static SimpleService NewWith(unsigned int some_value)
+    {
+        var self = new SimpleService();
+        ffierror rval = simple_service_new_with(this._context, some_value);
+        if (rval != ffierror.OK)
         {
-            SimpleService* self = new SimpleService();
-            ffierror rval = simple_service_new_with(self->_context, some_value);
-            if (rval != FFIERROR_OK)
-            {
-                throw rval;
-            }
-            return *self;
+            throw new InteropException<ffierror>(rval);
         }
+        return self;
+    }
 
-        void Dispose()
+    void Dispose()
+    {
+        ffierror rval = simple_service_destroy(_context);
+        if (rval != ffierror.OK)
         {
-            ffierror rval = simple_service_destroy(_context);
-            if (rval != FFIERROR_OK)
-            {
-                throw rval;
-            }
+            throw new InteropException<ffierror>(rval);
         }
+    }
 
-        simpleservice** Context() const { return _context; }
-    private:
-        explicit SimpleService(simpleservice** context) : _context(context) {}
-    public:
-        static SimpleService FromContext(simpleservice** context) { return SimpleService(context); }
+    void* Context() const { return _context; }
+private:
+    explicit SimpleService(void* context) : _context(context) {}
+public:
+    static SimpleService FromContext(void* context) { return SimpleService(context); }
 };
 #endif /* __cplusplus */
 
-#ifdef __cplusplus
+
 class Vec4
 {
     private:
-        vec4** _context;
-    public:
+    void* _context;
 
-        Vec4() : _context(nullptr) {}
+    Vec4() : _context(nullptr) {}
 
-        static Vec4 New(float x, float y, float z, float w)
+    static Vec4 New(float x, float y, float z, float w)
+    {
+        var self = new Vec4();
+        ffierror rval = vec4_new(this._context, x, y, z, w);
+        if (rval != ffierror.OK)
         {
-            Vec4* self = new Vec4();
-            ffierror rval = vec4_new(self->_context, x, y, z, w);
-            if (rval != FFIERROR_OK)
-            {
-                throw rval;
-            }
-            return *self;
+            throw new InteropException<ffierror>(rval);
         }
+        return self;
+    }
 
-        void Dispose()
+    void Dispose()
+    {
+        ffierror rval = vec4_destroy(_context);
+        if (rval != ffierror.OK)
         {
-            ffierror rval = vec4_destroy(_context);
-            if (rval != FFIERROR_OK)
-            {
-                throw rval;
-            }
+            throw new InteropException<ffierror>(rval);
         }
+    }
 
-        float Dot(const vec4* other)
-        {
-            return vec4_dot(*_context, other);
-        }
+    float Dot(const vec4* other)
+    {
+        return vec4_dot(_context, other);
+    }
 
-        vec4** Context() const { return _context; }
-    private:
-        explicit Vec4(vec4** context) : _context(context) {}
-    public:
-        static Vec4 FromContext(vec4** context) { return Vec4(context); }
+    void* Context() const { return _context; }
+private:
+    explicit Vec4(void* context) : _context(context) {}
+public:
+    static Vec4 FromContext(void* context) { return Vec4(context); }
 };
-#endif /* __cplusplus */
+
 
 
 #ifdef __cplusplus

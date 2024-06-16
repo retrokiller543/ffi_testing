@@ -358,6 +358,7 @@ dependencies = [
  "interoptopus_backend_c",
  "interoptopus_backend_cpython",
  "interoptopus_backend_csharp",
+ "interoptopus_custom_c_backend",
  "log",
  "pyo3",
  "pyo3-helper-macros",
@@ -415,6 +416,12 @@ name = "heck"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
+
+[[package]]
+name = "heck"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
 name = "hermit-abi"
@@ -475,7 +482,7 @@ version = "0.14.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fabbdb472d36540417d3f2fe48a9372c1d806a2a5b6e2ef35cbd09c4e4d1f59"
 dependencies = [
- "heck",
+ "heck 0.4.1",
  "interoptopus",
 ]
 
@@ -494,7 +501,15 @@ version = "0.14.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc4c22d9630fcd70d19f65c72afafb42787dda47b975be28484948a96d508bd6"
 dependencies = [
- "heck",
+ "heck 0.4.1",
+ "interoptopus",
+]
+
+[[package]]
+name = "interoptopus_custom_c_backend"
+version = "0.1.0"
+dependencies = [
+ "heck 0.5.0",
  "interoptopus",
 ]
 
@@ -786,7 +801,7 @@ version = "0.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08260721f32db5e1a5beae69a55553f56b99bd0e1c3e6e0a5e8851a9d0f5a85c"
 dependencies = [
- "heck",
+ "heck 0.4.1",
  "proc-macro2",
  "pyo3-build-config",
  "quote",

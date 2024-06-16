@@ -356,116 +356,86 @@ SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_delete_1vec2(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1x_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1x_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t arg2 ;
-  int32_t *argp2 ;
+  int arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (int)jarg2; 
   if (arg1) (arg1)->x = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_vec3_1x_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_vec3_1x_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  result =  ((arg1)->x);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  result = (int) ((arg1)->x);
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1y_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1y_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t arg2 ;
-  int32_t *argp2 ;
+  int arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (int)jarg2; 
   if (arg1) (arg1)->y = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_vec3_1y_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_vec3_1y_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  result =  ((arg1)->y);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  result = (int) ((arg1)->y);
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1z_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_vec3_1z_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t arg2 ;
-  int32_t *argp2 ;
+  int arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = (int)jarg2; 
   if (arg1) (arg1)->z = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_vec3_1z_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_vec3_1z_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   struct vec3 *arg1 = (struct vec3 *) 0 ;
-  int32_t result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(struct vec3 **)&jarg1; 
-  result =  ((arg1)->z);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  result = (int) ((arg1)->z);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -517,133 +487,71 @@ SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_my_1function(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_vec3_1new(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
+SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_vec3_1new(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jint jarg3) {
   jlong jresult = 0 ;
-  int32_t arg1 ;
-  int32_t arg2 ;
-  int32_t arg3 ;
-  int32_t *argp1 ;
-  int32_t *argp2 ;
-  int32_t *argp3 ;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
   vec3 *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  argp1 = *(int32_t **)&jarg1; 
-  if (!argp1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg1 = *argp1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg2 = *argp2; 
-  argp3 = *(int32_t **)&jarg3; 
-  if (!argp3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg3 = *argp3; 
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
   result = (vec3 *)vec3_new(arg1,arg2,arg3);
   *(vec3 **)&jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jlong jarg4) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3, jint jarg4) {
+  jint jresult = 0 ;
   vec3 *arg1 = (vec3 *) 0 ;
-  int32_t arg2 ;
-  int32_t arg3 ;
-  int32_t arg4 ;
-  int32_t *argp2 ;
-  int32_t *argp3 ;
-  int32_t *argp4 ;
-  int32_t result;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(vec3 **)&jarg1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg2 = *argp2; 
-  argp3 = *(int32_t **)&jarg3; 
-  if (!argp3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg3 = *argp3; 
-  argp4 = *(int32_t **)&jarg4; 
-  if (!argp4) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg4 = *argp4; 
-  result = add(arg1,arg2,arg3,arg4);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (int)jarg4; 
+  result = (int)add(arg1,arg2,arg3,arg4);
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_add_1reverse_1args(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jlong jarg4, jobject jarg4_) {
-  jlong jresult = 0 ;
-  int32_t arg1 ;
-  int32_t arg2 ;
-  int32_t arg3 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_add_1reverse_1args(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jint jarg3, jlong jarg4, jobject jarg4_) {
+  jint jresult = 0 ;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
   vec3 *arg4 = (vec3 *) 0 ;
-  int32_t *argp1 ;
-  int32_t *argp2 ;
-  int32_t *argp3 ;
-  int32_t result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg4_;
-  argp1 = *(int32_t **)&jarg1; 
-  if (!argp1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg1 = *argp1; 
-  argp2 = *(int32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg2 = *argp2; 
-  argp3 = *(int32_t **)&jarg3; 
-  if (!argp3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null int32_t");
-    return 0;
-  }
-  arg3 = *argp3; 
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
   arg4 = *(vec3 **)&jarg4; 
-  result = add_reverse_args(arg1,arg2,arg3,arg4);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  result = (int)add_reverse_args(arg1,arg2,arg3,arg4);
+  jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_dot(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_dot(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jint jresult = 0 ;
   vec3 *arg1 = (vec3 *) 0 ;
   vec3 *arg2 = (vec3 *) 0 ;
-  int32_t result;
+  int result;
   
   (void)jenv;
   (void)jcls;
@@ -651,12 +559,8 @@ SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_dot(JNIEnv *jenv, jclass j
   (void)jarg2_;
   arg1 = *(vec3 **)&jarg1; 
   arg2 = *(vec3 **)&jarg2; 
-  result = dot(arg1,(struct vec3 const *)arg2);
-  {
-    int32_t * resultptr = (int32_t *) malloc(sizeof(int32_t));
-    memmove(resultptr, &result, sizeof(int32_t));
-    *(int32_t **)&jresult = resultptr;
-  }
+  result = (int)dot(arg1,(struct vec3 const *)arg2);
+  jresult = (jint)result; 
   return jresult;
 }
 
@@ -702,13 +606,18 @@ SWIGEXPORT jlong JNICALL Java_com_example_ffi_1libJNI_normalize(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_hello(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  int8_t *arg1 = (int8_t *) 0 ;
+SWIGEXPORT void JNICALL Java_com_example_ffi_1libJNI_hello(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  char *arg1 = (char *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(int8_t **)&jarg1; 
-  hello((int8_t const *)arg1);
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg1, 0);
+    if (!arg1) return ;
+  }
+  hello((char const *)arg1);
+  if (arg1) (*jenv)->ReleaseStringUTFChars(jenv, jarg1, (const char *)arg1);
 }
 
 
@@ -743,19 +652,13 @@ SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_simple_1service_1destroy(JN
 SWIGEXPORT jint JNICALL Java_com_example_ffi_1libJNI_simple_1service_1new_1with(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   jint jresult = 0 ;
   simpleservice **arg1 = (simpleservice **) 0 ;
-  uint32_t arg2 ;
-  uint32_t *argp2 ;
+  unsigned int arg2 ;
   ffierror result;
   
   (void)jenv;
   (void)jcls;
   arg1 = *(simpleservice ***)&jarg1; 
-  argp2 = *(uint32_t **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null uint32_t");
-    return 0;
-  }
-  arg2 = *argp2; 
+  arg2 = (unsigned int)jarg2; 
   result = (ffierror)simple_service_new_with(arg1,arg2);
   jresult = (jint)result; 
   return jresult;

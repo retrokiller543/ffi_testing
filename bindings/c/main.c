@@ -50,14 +50,12 @@ int main() {
     }
 
     #ifdef __cplusplus
-    
     {
-        vec4 vecA(1.0f, 2.0f, 3.0f, 4.0f);
-        vec4 vecB(4.0f, 3.0f, 2.0f, 1.0f);
-        float dot_product = vecA.dot(&vecB);
+        Vec4 vecA = Vec4::New(1.0f, 2.0f, 3.0f, 4.0f);
+        Vec4 vecB = Vec4::New(4.0f, 3.0f, 2.0f, 1.0f);
+        float dot_product = vecA.Dot(*vecB.Context());
         printf("Dot product of vecA and vecB: %f\n", dot_product);
     }
-
     #endif
 
     return 0;
