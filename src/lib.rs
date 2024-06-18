@@ -1,61 +1,60 @@
-#[cfg(feature = "jni")]
-pub mod hello_jni;
-
-#[cfg(feature = "c-ffi")]
-pub mod hello_c;
-
-#[cfg(feature = "interoptopus")]
-pub mod interop;
-pub mod results;
-pub mod threads_example;
+#![allow(clippy::redundant_locals)]
 
 use std::time::Instant;
 
 use aes::Aes128;
 use cipher::{BlockEncrypt, KeyInit};
-#[cfg(feature = "c-ffi")]
-use ffi::ffi;
 
-use interoptopus::ffi_function;
-use log::info;
-#[cfg(feature = "pyo3")]
-use pyo3_helper_macros::py3_bind_pub;
+#[cfg(feature = "jni")]
+pub mod hello_jni;
 
+#[cfg(all(feature = "c-ffi", feature = "interoptopus"))]
+pub mod c_ffi;
+#[cfg(feature = "interoptopus")]
+pub mod interop;
+#[cfg(feature = "interoptopus")]
+pub mod results;
+#[cfg(feature = "interoptopus")]
+pub mod threads_example;
+#[cfg(feature = "wasm-bindgen")]
+pub mod wasm;
 
-/// A basic vector 3 in our FFI layer using integers.
-#[interoptopus::ffi_type]
-#[repr(C)]
-#[derive(Debug, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "pyo3", pyo3::pyclass(get_all))]
+#[cfg(feature = "wasm-bindgen")]
+use wasm_bindgen::prelude::*;
+
+#[cfg(feature = "wasm-bindgen")]
+use crate::wasm::set_panic_hook;
+
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+#[derive(Default, Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(any(feature = "interoptopus", feature = "c-ffi"), repr(C))]
+#[cfg_attr(
+    any(feature = "interoptopus", feature = "c-ffi"),
+    interoptopus::ffi_type
+)]
+/// The basic struct we will call methods in our FFI layer.
 pub struct Vec3 {
     x: i32,
     y: i32,
     z: i32,
 }
 
-#[ffi_function]
-#[no_mangle]
-pub extern "C" fn init_logger() {
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+pub fn init_logger() {
     env_logger::init();
 }
 
-#[cfg_attr(feature = "pyo3", py3_bind_pub)]
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
 impl Vec3 {
     pub fn new(x: i32, y: i32, z: i32) -> Vec3 {
+        #[cfg(feature = "wasm-bindgen")]
+        set_panic_hook();
         Vec3 { x, y, z }
     }
 }
 
-#[no_mangle]
-#[ffi_function]
-pub extern "C" fn vec3_new(x: i32, y: i32, z: i32) -> *mut Vec3 {
-    info!("Vec3::new({:?}, {:?}, {:?})", x, y, z);
-    Box::into_raw(Box::new(Vec3::new(x, y, z)))
-}
-
-#[ffi_function]
-#[no_mangle]
-pub extern "C" fn benchmark_rust() -> f64 {
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+pub fn benchmark_rust() -> f64 {
     const ITERATIONS: usize = 100_000;
 
     // AES encryption key and data
@@ -79,11 +78,8 @@ pub extern "C" fn benchmark_rust() -> f64 {
     (end - start).as_secs_f64()
 }
 
-#[ffi(from_ptr, self_ty = "*mut Vec3")]
-#[cfg_attr(feature = "pyo3", py3_bind_pub)]
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
 impl Vec3 {
-    #[ffi(arg(self), arg(rest))]
-    #[ffi_function]
     pub fn add(&mut self, x: i32, y: i32, z: i32) -> i32 {
         self.x += x;
         self.y += y;
@@ -91,20 +87,14 @@ impl Vec3 {
         self.x + self.y + self.z
     }
 
-    #[ffi(arg(rest), arg(self))]
-    #[ffi_function]
     pub fn add_reverse_args(&mut self, x: i32, y: i32, z: i32) -> i32 {
         self.add(x, y, z)
     }
 
-    #[ffi(arg(self), arg(rest))]
-    #[ffi_function]
     pub fn dot(&self, other: &Vec3) -> i32 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
-    #[ffi(arg(self), arg(rest))]
-    #[ffi_function]
     pub fn cross(&self, other: &Vec3) -> Vec3 {
         Vec3 {
             x: self.y * other.z - self.z * other.y,
@@ -113,7 +103,6 @@ impl Vec3 {
         }
     }
 
-    #[ffi(arg(self), arg(rest))]
     pub fn normalize(&self) -> Vec3 {
         let len = ((self.x * self.x + self.y * self.y + self.z * self.z) as f64).sqrt();
         Vec3 {

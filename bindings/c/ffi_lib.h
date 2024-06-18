@@ -15,6 +15,13 @@ extern "C" {
 
 typedef struct simpleservice simpleservice;
 
+/// A basic vector 3 in our FFI layer using integers.
+typedef struct vec3 {
+    int x;
+    int y;
+    int z;
+} vec3;
+
 typedef struct vec4 vec4;
 
 typedef enum ffierror
@@ -32,29 +39,9 @@ typedef struct vec2
     float y;
     } vec2;
 
-/// A basic vector 3 in our FFI layer using integers.
-typedef struct vec3
-    {
-    int x;
-    int y;
-    int z;
-    } vec3;
-
 
 /// Function using the type.
 vec2 my_function(vec2 input);
-
-vec3* vec3_new(int x, int y, int z);
-
-int add(vec3* slf, int x, int y, int z);
-
-int add_reverse_args(int x, int y, int z, vec3* slf);
-
-int dot(vec3* slf, const vec3* other);
-
-vec3 cross(vec3* slf, const vec3* other);
-
-vec3 normalize(vec3* slf);
 
 void hello(const char* name);
 
@@ -101,6 +88,26 @@ void vec4_set_z(vec4* context, float value);
 void vec4_set_w(vec4* context, float value);
 
 void init_logger();
+
+/// Destroys the given instance.
+///
+/// # Safety
+///
+/// The passed parameter MUST have been created with the corresponding init function;
+/// passing any other value results in undefined behavior.
+ffierror vec3_destroy(vec3** context);
+
+ffierror vec3_new(vec3** context, int x, int y, int z);
+
+int vec3_add(vec3* context, int x, int y, int z);
+
+int vec3_add_reverse_args(vec3* context, int x, int y, int z);
+
+int vec3_dot(const vec3* context, const vec3* other);
+
+vec3 vec3_cross(const vec3* context, const vec3* other);
+
+vec3 vec3_normalize(const vec3* context);
 
 #ifdef __cplusplus
 class SimpleService
@@ -220,6 +227,72 @@ class Vec4
         explicit Vec4(vec4* context) : _context(context) {}
     public:
         static Vec4 FromContext(vec4* context) { return Vec4(context); }
+};
+#endif /* __cplusplus */
+
+/// A basic vector 3 in our FFI layer using integers.
+#ifdef __cplusplus
+class Vec3
+{
+    private:
+        vec3* _context;
+    public:
+
+        Vec3() : _context(nullptr) {}
+        ~Vec3() { Dispose(); }
+
+        static Vec3 New(int x, int y, int z)
+        {
+            Vec3 self;
+            ffierror rval = vec3_new(&self._context, x, y, z);
+            if (rval != FFIERROR_OK)
+            {
+                throw rval;
+            }
+            return self;
+        }
+
+        void Dispose()
+        {
+            ffierror rval = vec3_destroy(&_context);
+            if (rval != FFIERROR_OK)
+            {
+                throw rval;
+            }
+        }
+
+        int Add(int x, int y, int z)
+        {
+            return vec3_add(_context, x, y, z);
+        }
+
+        int AddReverseArgs(int x, int y, int z)
+        {
+            return vec3_add_reverse_args(_context, x, y, z);
+        }
+
+        int Dot(const vec3* other)
+        {
+            return vec3_dot(_context, other);
+        }
+
+        Vec3 Cross(const vec3* other)
+        {
+            vec3 result = vec3_cross(_context, other);
+            return Vec3::FromContext(&result);
+        }
+
+        Vec3 Normalize()
+        {
+            vec3 result = vec3_normalize(_context);
+            return Vec3::FromContext(&result);
+        }
+
+        vec3* Context() const { return _context; }
+    private:
+        explicit Vec3(vec3* context) : _context(context) {}
+    public:
+        static Vec3 FromContext(vec3* context) { return Vec3(context); }
 };
 #endif /* __cplusplus */
 

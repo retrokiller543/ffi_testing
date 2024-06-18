@@ -1,8 +1,8 @@
-use std::time::Instant;
-use std::thread;
 use aes::Aes128;
 use cipher::{BlockEncrypt, KeyInit};
 use interoptopus::ffi_function;
+use std::thread;
+use std::time::Instant;
 use tokio::runtime::Runtime;
 use tokio::task;
 
@@ -47,9 +47,7 @@ async fn async_benchmark() -> f64 {
 #[no_mangle]
 pub extern "C" fn benchmark_rust_async() -> f64 {
     // Create a new thread to run the async function
-    let handle = thread::spawn(|| {
-        Runtime::new().unwrap().block_on(async_benchmark())
-    });
+    let handle = thread::spawn(|| Runtime::new().unwrap().block_on(async_benchmark()));
 
     // Wait for the thread to finish
     handle.join().unwrap()

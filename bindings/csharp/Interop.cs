@@ -23,24 +23,6 @@ namespace ffi_lib.testing
         [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "my_function")]
         public static extern Vec2 my_function(Vec2 input);
 
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_new")]
-        public static extern IntPtr vec3_new(int x, int y, int z);
-
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "add")]
-        public static extern int add(out Vec3 slf, int x, int y, int z);
-
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "add_reverse_args")]
-        public static extern int add_reverse_args(int x, int y, int z, out Vec3 slf);
-
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "dot")]
-        public static extern int dot(out Vec3 slf, ref Vec3 other);
-
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "cross")]
-        public static extern Vec3 cross(out Vec3 slf, ref Vec3 other);
-
-        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "normalize")]
-        public static extern Vec3 normalize(out Vec3 slf);
-
         [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "hello")]
         public static extern void hello(ref sbyte name);
 
@@ -104,6 +86,42 @@ namespace ffi_lib.testing
         [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "init_logger")]
         public static extern void init_logger();
 
+        /// Destroys the given instance.
+        ///
+        /// # Safety
+        ///
+        /// The passed parameter MUST have been created with the corresponding init function;
+        /// passing any other value results in undefined behavior.
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_destroy")]
+        public static extern FFIError vec3_destroy(ref IntPtr context);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_new")]
+        public static extern FFIError vec3_new(ref IntPtr context, int x, int y, int z);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_add")]
+        public static extern int vec3_add(IntPtr context, int x, int y, int z);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_add_reverse_args")]
+        public static extern int vec3_add_reverse_args(IntPtr context, int x, int y, int z);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_dot")]
+        public static extern int vec3_dot(IntPtr context, IntPtr other);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_cross")]
+        public static extern IntPtr vec3_cross(IntPtr context, IntPtr other);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_normalize")]
+        public static extern IntPtr vec3_normalize(IntPtr context);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_get_x")]
+        public static extern int vec3_get_x(IntPtr context);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_get_y")]
+        public static extern int vec3_get_y(IntPtr context);
+
+        [DllImport(NativeLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "vec3_get_z")]
+        public static extern int vec3_get_z(IntPtr context);
+
     }
 
     /// A simple type in our FFI layer.
@@ -115,7 +133,7 @@ namespace ffi_lib.testing
         public float y;
     }
 
-    /// A basic vector 3 in our FFI layer using integers.
+    /// The basic struct we will call methods in our FFI layer.
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public partial struct Vec3
@@ -233,6 +251,77 @@ namespace ffi_lib.testing
         public void SetW(float value)
         {
             InteropClass.vec4_set_w(_context, value);
+        }
+
+        public IntPtr Context => _context;
+    }
+
+
+    /// A basic vector 3 in our FFI layer using integers.
+    public partial class Vec3 : IDisposable
+    {
+        private IntPtr _context;
+
+        private Vec3() {}
+
+        public static Vec3 New(int x, int y, int z)
+        {
+            var self = new Vec3();
+            var rval = InteropClass.vec3_new(ref self._context, x, y, z);
+            if (rval != FFIError.Ok)
+            {
+                throw new InteropException<FFIError>(rval);
+            }
+            return self;
+        }
+
+        public void Dispose()
+        {
+            var rval = InteropClass.vec3_destroy(ref _context);
+            if (rval != FFIError.Ok)
+            {
+                throw new InteropException<FFIError>(rval);
+            }
+        }
+
+        public int Add(int x, int y, int z)
+        {
+            return InteropClass.vec3_add(_context, x, y, z);
+        }
+
+        public int AddReverseArgs(int x, int y, int z)
+        {
+            return InteropClass.vec3_add_reverse_args(_context, x, y, z);
+        }
+
+        public int Dot(IntPtr other)
+        {
+            return InteropClass.vec3_dot(_context, other);
+        }
+
+        public IntPtr Cross(IntPtr other)
+        {
+            return InteropClass.vec3_cross(_context, other);
+        }
+
+        public IntPtr Normalize()
+        {
+            return InteropClass.vec3_normalize(_context);
+        }
+
+        public int GetX()
+        {
+            return InteropClass.vec3_get_x(_context);
+        }
+
+        public int GetY()
+        {
+            return InteropClass.vec3_get_y(_context);
+        }
+
+        public int GetZ()
+        {
+            return InteropClass.vec3_get_z(_context);
         }
 
         public IntPtr Context => _context;

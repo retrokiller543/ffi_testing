@@ -2,9 +2,15 @@
 out/
 node_modules/
 build/
+pkg/
 
 *.out
 *.so
 *.dylib
 *.dll
 *.pyc
+*.log
+*.ghc
+*.gch
+*_wrap.*
+*.jar

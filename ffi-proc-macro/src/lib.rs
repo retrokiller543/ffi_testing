@@ -381,7 +381,6 @@ impl<'a> FfiMethods<'a> {
         let ffi_func_args = self.ffi_func_args(method)?;
         //dbg!(&method.original);
         let ffi_func_attrs = method.original.attrs.clone();
-        
 
         let (_impl_method_return_ty, ffi_func_return_ty, need_expect) = Self::ffi_return_ty(
             &method.original.sig.output,

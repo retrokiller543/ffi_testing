@@ -1,5 +1,5 @@
 use robusta_jni::bridge;
-use robusta_jni::convert::{Signature, IntoJavaValue};
+use robusta_jni::convert::{IntoJavaValue, Signature};
 use robusta_jni::jni::errors::Result as JniResult;
 use robusta_jni::jni::JNIEnv;
 
@@ -7,7 +7,10 @@ use crate::Vec3;
 
 #[bridge]
 mod jniv2 {
-    use robusta_jni::{convert::{Field, FromJavaValue, TryFromJavaValue, TryIntoJavaValue}, jni::objects::AutoLocal};
+    use robusta_jni::{
+        convert::{Field, FromJavaValue, TryFromJavaValue, TryIntoJavaValue},
+        jni::objects::AutoLocal,
+    };
 
     use super::*;
 
@@ -26,27 +29,54 @@ mod jniv2 {
 
     impl<'env: 'borrow, 'borrow> Vec3JniV2<'env, 'borrow> {
         #[constructor]
-        pub extern "java" fn new(env: &'borrow JNIEnv<'env>, x: i32, y: i32, z: i32) -> JniResult<Self> {}
+        pub extern "java" fn new(
+            env: &'borrow JNIEnv<'env>,
+            x: i32,
+            y: i32,
+            z: i32,
+        ) -> JniResult<Self> {
+        }
 
         pub extern "jni" fn add(mut self, _env: &JNIEnv, x: i32, y: i32, z: i32) -> JniResult<i32> {
             self.x.set(self.x.get()? + x)?;
             self.y.set(self.y.get()? + y)?;
             self.z.set(self.z.get()? + z)?;
-            
+
             let result: i32 = self.x.get()? + self.y.get()? + self.z.get()?;
             return Ok(result);
         }
 
-        pub extern "jni" fn addReverseArgs(self, env: &JNIEnv, x: i32, y: i32, z: i32) -> JniResult<i32> {
+        pub extern "jni" fn addReverseArgs(
+            self,
+            env: &JNIEnv,
+            x: i32,
+            y: i32,
+            z: i32,
+        ) -> JniResult<i32> {
             self.add(env, x, y, z)
         }
 
-        pub extern "jni" fn dot(self, _env: &JNIEnv, other: Vec3JniV2<'env, 'borrow>) -> JniResult<i32> {
-            Ok(self.x.get()? * other.x.get()? + self.y.get()? * other.y.get()? + self.z.get()? * other.z.get()?)
+        pub extern "jni" fn dot(
+            self,
+            _env: &JNIEnv,
+            other: Vec3JniV2<'env, 'borrow>,
+        ) -> JniResult<i32> {
+            Ok(self.x.get()? * other.x.get()?
+                + self.y.get()? * other.y.get()?
+                + self.z.get()? * other.z.get()?)
         }
 
-        pub extern "jni" fn cross(mut self, _env: &JNIEnv, other: Vec3JniV2<'env, 'borrow>) -> JniResult<Vec3JniV2<'env, 'borrow>> {
-            println!("[rust] cross: {}, {}, {}", self.x.get()?, self.y.get()?, self.z.get()?);
+        pub extern "jni" fn cross(
+            mut self,
+            _env: &JNIEnv,
+            other: Vec3JniV2<'env, 'borrow>,
+        ) -> JniResult<Vec3JniV2<'env, 'borrow>> {
+            println!(
+                "[rust] cross: {}, {}, {}",
+                self.x.get()?,
+                self.y.get()?,
+                self.z.get()?
+            );
             let x: i32 = self.y.get()? * other.z.get()? - self.z.get()? * other.y.get()?;
             let y: i32 = self.z.get()? * other.x.get()? - self.x.get()? * other.z.get()?;
             let z: i32 = self.x.get()? * other.y.get()? - self.y.get()? * other.x.get()?;
@@ -57,14 +87,30 @@ mod jniv2 {
             self.y.set(y)?;
             self.z.set(z)?;
 
-            println!("[rust] cross-set-result: {}, {}, {}", self.x.get()?, self.y.get()?, self.z.get()?);
-            
+            println!(
+                "[rust] cross-set-result: {}, {}, {}",
+                self.x.get()?,
+                self.y.get()?,
+                self.z.get()?
+            );
+
             return Ok(self);
         }
 
-        pub extern "jni" fn normalize(mut self, _env: &JNIEnv) -> JniResult<Vec3JniV2<'env, 'borrow>> {
-            println!("[rust] normalize: {}, {}, {}", self.x.get()?, self.y.get()?, self.z.get()?);
-            let len = ((self.x.get()? * self.x.get()? + self.y.get()? * self.y.get()? + self.z.get()? * self.z.get()?) as f64).sqrt();
+        pub extern "jni" fn normalize(
+            mut self,
+            _env: &JNIEnv,
+        ) -> JniResult<Vec3JniV2<'env, 'borrow>> {
+            println!(
+                "[rust] normalize: {}, {}, {}",
+                self.x.get()?,
+                self.y.get()?,
+                self.z.get()?
+            );
+            let len = ((self.x.get()? * self.x.get()?
+                + self.y.get()? * self.y.get()?
+                + self.z.get()? * self.z.get()?) as f64)
+                .sqrt();
 
             let x = (self.x.get()? as f64 / len) as i32;
             let y = (self.y.get()? as f64 / len) as i32;
@@ -74,7 +120,6 @@ mod jniv2 {
             self.z.set(z)?;
             Ok(self)
         }
-
     }
 }
 

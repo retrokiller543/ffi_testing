@@ -15,20 +15,24 @@ ffi = { path = "ffi-proc-macro", optional = true}
 robusta_jni = { version = "0.2", optional = true }
 pyo3 = { version = "0.21", features = ["extension-module", "multiple-pymethods"], optional = true }
 pyo3-helper-macros ={ version = "*", optional = true }
-interoptopus = { version = "*", optional = false, features = ["log"]}
+interoptopus = { version = "*", optional = true, features = ["log"]}
 log = "0.4.20"
 env_logger = "0.11.1"
-tokio = { version = "1.38.0", features = ["full"] }
+tokio = { version = "1.38.0", features = ["full"], optional = true }
 aes = "0.8"
 cipher = "0.4"
 interoptopus_custom_c_backend = { version = "*", path = "../interoptopus_custom_c_backend" }
+wasm-bindgen = { version = "0.2", optional = true }
+console_error_panic_hook = { version = "0.1.7", optional = true }
 
 [features]
 default = ["c-ffi", "interoptopus"]
 jni = ["dep:robusta_jni"]
-c-ffi = ["dep:ffi"]
+c-ffi = ["dep:ffi", "dep:tokio"]
 pyo3 = ["dep:pyo3", "dep:pyo3-helper-macros"]
-interoptopus = []
+interoptopus = ["dep:interoptopus", "dep:tokio"]
+wasm-bindgen = ["dep:wasm-bindgen"]
+console_error_panic_hook = ["dep:console_error_panic_hook"]
 
 [dev-dependencies]
 interoptopus_backend_csharp = { version = "*"}

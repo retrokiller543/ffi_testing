@@ -15,6 +15,9 @@ extern "C" {
 
 typedef struct simpleservice simpleservice;
 
+/// A basic vector 3 in our FFI layer using integers.
+typedef struct vec3 vec3;
+
 typedef struct vec4 vec4;
 
 typedef enum ffierror
@@ -32,7 +35,7 @@ typedef struct vec2
     float y;
     } vec2;
 
-/// A basic vector 3 in our FFI layer using integers.
+/// The basic struct we will call methods in our FFI layer.
 typedef struct vec3
     {
     int32_t x;
@@ -43,18 +46,6 @@ typedef struct vec3
 
 /// Function using the type.
 vec2 my_function(vec2 input);
-
-vec3* vec3_new(int32_t x, int32_t y, int32_t z);
-
-int32_t add(vec3* slf, int32_t x, int32_t y, int32_t z);
-
-int32_t add_reverse_args(int32_t x, int32_t y, int32_t z, vec3* slf);
-
-int32_t dot(vec3* slf, const vec3* other);
-
-vec3 cross(vec3* slf, const vec3* other);
-
-vec3 normalize(vec3* slf);
 
 void hello(const int8_t* name);
 
@@ -101,6 +92,32 @@ void vec4_set_z(vec4* context, float value);
 void vec4_set_w(vec4* context, float value);
 
 void init_logger();
+
+/// Destroys the given instance.
+///
+/// # Safety
+///
+/// The passed parameter MUST have been created with the corresponding init function;
+/// passing any other value results in undefined behavior.
+ffierror vec3_destroy(vec3** context);
+
+ffierror vec3_new(vec3** context, int32_t x, int32_t y, int32_t z);
+
+int32_t vec3_add(vec3* context, int32_t x, int32_t y, int32_t z);
+
+int32_t vec3_add_reverse_args(vec3* context, int32_t x, int32_t y, int32_t z);
+
+int32_t vec3_dot(const vec3* context, const vec3* other);
+
+vec3 vec3_cross(const vec3* context, const vec3* other);
+
+vec3 vec3_normalize(const vec3* context);
+
+int32_t vec3_get_x(const vec3* context);
+
+int32_t vec3_get_y(const vec3* context);
+
+int32_t vec3_get_z(const vec3* context);
 
 
 #ifdef __cplusplus

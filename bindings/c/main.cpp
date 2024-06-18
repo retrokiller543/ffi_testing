@@ -6,8 +6,6 @@
 
 int main() {
     printf("Rust Benchmark took %lf\n", benchmark_rust());
-    for (int i = 0; i < 10000; ++i)
-        benchmark_rust_async();
     printf("Rust async Benchmark took %lf\n", benchmark_rust_async());
     {
         vec4* vecA;
@@ -50,10 +48,16 @@ int main() {
     {
         Vec4 vecA = Vec4::New(1.0f, 2.0f, 3.0f, 4.0f);
         Vec4 vecB = Vec4::New(4.0f, 3.0f, 2.0f, 1.0f);
-        vecB.SetX(2.0f);
         float dot_product = vecA.Dot(vecB.Context());
         printf("Dot product of vecA and vecB: %f\n", dot_product);
     }
+
+    Vec3 vecA = Vec3::New(1, 2, 3);
+    Vec3 vecB = Vec3::New(4, 5, 6);
+    int res = vecA.Add(vecB.GetX(), vecB.GetY(), vecB.GetZ());
+    printf("Addition of vecA and vecB: %d\n", res);
+    //Vec3 cross = vecA.Cross(vecB.Context());
+    //printf("Cross product of vecA and vecB: %d %d %d\n", cross.GetX(), cross.GetY(), cross.GetZ());
     #endif
 
     return 0;

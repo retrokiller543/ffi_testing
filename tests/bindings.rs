@@ -1,6 +1,7 @@
-use interoptopus::util::NamespaceMappings;
-use interoptopus::{Error, Interop};
+#[cfg(feature = "interoptopus")]
+use interoptopus::{util::NamespaceMappings, Error, Interop};
 
+#[cfg(feature = "interoptopus")]
 #[test]
 #[cfg_attr(miri, ignore)]
 fn bindings_csharp() -> Result<(), Error> {
@@ -20,6 +21,7 @@ fn bindings_csharp() -> Result<(), Error> {
     Ok(())
 }
 
+#[cfg(feature = "interoptopus")]
 #[test]
 #[cfg_attr(miri, ignore)]
 fn bindings_c() -> Result<(), Error> {
@@ -34,11 +36,12 @@ fn bindings_c() -> Result<(), Error> {
         },
         ffi_lib::interop::my_inventory(),
     )
-    .write_file("bindings/c/ffi_lib.h")?;
+    .write_file("bindings/c/ffi_lib.hpp")?;
 
     Ok(())
 }
 
+#[cfg(feature = "interoptopus")]
 #[test]
 #[cfg_attr(miri, ignore)]
 fn bindings_cpython_cffi() -> Result<(), Error> {
@@ -50,6 +53,7 @@ fn bindings_cpython_cffi() -> Result<(), Error> {
     Ok(())
 }
 
+#[cfg(feature = "interoptopus")]
 #[test]
 #[cfg_attr(miri, ignore)]
 fn bindings_c_custom() -> Result<(), Error> {

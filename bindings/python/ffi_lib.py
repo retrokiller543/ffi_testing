@@ -11,12 +11,6 @@ def init_lib(path):
     c_lib = ctypes.cdll.LoadLibrary(path)
 
     c_lib.my_function.argtypes = [Vec2]
-    c_lib.vec3_new.argtypes = [ctypes.c_int32, ctypes.c_int32, ctypes.c_int32]
-    c_lib.add.argtypes = [ctypes.POINTER(Vec3), ctypes.c_int32, ctypes.c_int32, ctypes.c_int32]
-    c_lib.add_reverse_args.argtypes = [ctypes.c_int32, ctypes.c_int32, ctypes.c_int32, ctypes.POINTER(Vec3)]
-    c_lib.dot.argtypes = [ctypes.POINTER(Vec3), ctypes.POINTER(Vec3)]
-    c_lib.cross.argtypes = [ctypes.POINTER(Vec3), ctypes.POINTER(Vec3)]
-    c_lib.normalize.argtypes = [ctypes.POINTER(Vec3)]
     c_lib.hello.argtypes = [ctypes.POINTER(ctypes.c_int8)]
     c_lib.benchmark_rust.argtypes = []
     c_lib.benchmark_rust_async.argtypes = []
@@ -34,14 +28,18 @@ def init_lib(path):
     c_lib.vec4_set_z.argtypes = [ctypes.c_void_p, ctypes.c_float]
     c_lib.vec4_set_w.argtypes = [ctypes.c_void_p, ctypes.c_float]
     c_lib.init_logger.argtypes = []
+    c_lib.vec3_destroy.argtypes = [ctypes.POINTER(ctypes.c_void_p)]
+    c_lib.vec3_new.argtypes = [ctypes.POINTER(ctypes.c_void_p), ctypes.c_int32, ctypes.c_int32, ctypes.c_int32]
+    c_lib.vec3_add.argtypes = [ctypes.c_void_p, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32]
+    c_lib.vec3_add_reverse_args.argtypes = [ctypes.c_void_p, ctypes.c_int32, ctypes.c_int32, ctypes.c_int32]
+    c_lib.vec3_dot.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+    c_lib.vec3_cross.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+    c_lib.vec3_normalize.argtypes = [ctypes.c_void_p]
+    c_lib.vec3_get_x.argtypes = [ctypes.c_void_p]
+    c_lib.vec3_get_y.argtypes = [ctypes.c_void_p]
+    c_lib.vec3_get_z.argtypes = [ctypes.c_void_p]
 
     c_lib.my_function.restype = Vec2
-    c_lib.vec3_new.restype = ctypes.POINTER(Vec3)
-    c_lib.add.restype = ctypes.c_int32
-    c_lib.add_reverse_args.restype = ctypes.c_int32
-    c_lib.dot.restype = ctypes.c_int32
-    c_lib.cross.restype = Vec3
-    c_lib.normalize.restype = Vec3
     c_lib.benchmark_rust.restype = ctypes.c_double
     c_lib.benchmark_rust_async.restype = ctypes.c_double
     c_lib.simple_service_destroy.restype = ctypes.c_int
@@ -53,34 +51,28 @@ def init_lib(path):
     c_lib.vec4_get_y.restype = ctypes.c_float
     c_lib.vec4_get_z.restype = ctypes.c_float
     c_lib.vec4_get_w.restype = ctypes.c_float
+    c_lib.vec3_destroy.restype = ctypes.c_int
+    c_lib.vec3_new.restype = ctypes.c_int
+    c_lib.vec3_add.restype = ctypes.c_int32
+    c_lib.vec3_add_reverse_args.restype = ctypes.c_int32
+    c_lib.vec3_dot.restype = ctypes.c_int32
+    c_lib.vec3_cross.restype = ERROR
+    c_lib.vec3_normalize.restype = ERROR
+    c_lib.vec3_get_x.restype = ctypes.c_int32
+    c_lib.vec3_get_y.restype = ctypes.c_int32
+    c_lib.vec3_get_z.restype = ctypes.c_int32
 
     c_lib.simple_service_destroy.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
     c_lib.simple_service_new_with.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
     c_lib.vec4_destroy.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
     c_lib.vec4_new.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
+    c_lib.vec3_destroy.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
+    c_lib.vec3_new.errcheck = lambda rval, _fptr, _args: _errcheck(rval, 0)
 
 
 def my_function(input: Vec2) -> Vec2:
     """ Function using the type."""
     return c_lib.my_function(input)
-
-def vec3_new(x: int, y: int, z: int) -> ctypes.POINTER(Vec3):
-    return c_lib.vec3_new(x, y, z)
-
-def add(slf: ctypes.POINTER(Vec3), x: int, y: int, z: int) -> int:
-    return c_lib.add(slf, x, y, z)
-
-def add_reverse_args(x: int, y: int, z: int, slf: ctypes.POINTER(Vec3)) -> int:
-    return c_lib.add_reverse_args(x, y, z, slf)
-
-def dot(slf: ctypes.POINTER(Vec3), other: ctypes.POINTER(Vec3)) -> int:
-    return c_lib.dot(slf, other)
-
-def cross(slf: ctypes.POINTER(Vec3), other: ctypes.POINTER(Vec3)) -> Vec3:
-    return c_lib.cross(slf, other)
-
-def normalize(slf: ctypes.POINTER(Vec3)) -> Vec3:
-    return c_lib.normalize(slf)
 
 def hello(name: ctypes.POINTER(ctypes.c_int8)):
     return c_lib.hello(name)
@@ -175,7 +167,7 @@ class Vec2(ctypes.Structure):
 
 
 class Vec3(ctypes.Structure):
-    """ A basic vector 3 in our FFI layer using integers."""
+    """ The basic struct we will call methods in our FFI layer."""
 
     # These fields represent the underlying C data layout
     _fields_ = [
@@ -302,6 +294,62 @@ class Vec4:
     def set_w(self, value: float):
         """"""
         return c_lib.vec4_set_w(self._ctx, value)
+
+
+
+class Vec3:
+    """ A basic vector 3 in our FFI layer using integers."""
+    __api_lock = object()
+
+    def __init__(self, api_lock, ctx):
+        assert(api_lock == Vec3.__api_lock), "You must create this with a static constructor." 
+        self._ctx = ctx
+
+    @property
+    def _as_parameter_(self):
+        return self._ctx
+
+    @staticmethod
+    def new(x: int, y: int, z: int) -> Vec3:
+        """"""
+        ctx = ctypes.c_void_p()
+        c_lib.vec3_new(ctx, x, y, z)
+        self = Vec3(Vec3.__api_lock, ctx)
+        return self
+
+    def __del__(self):
+        c_lib.vec3_destroy(self._ctx, )
+    def add(self, x: int, y: int, z: int) -> int:
+        """"""
+        return c_lib.vec3_add(self._ctx, x, y, z)
+
+    def add_reverse_args(self, x: int, y: int, z: int) -> int:
+        """"""
+        return c_lib.vec3_add_reverse_args(self._ctx, x, y, z)
+
+    def dot(self, other: ctypes.c_void_p) -> int:
+        """"""
+        return c_lib.vec3_dot(self._ctx, other)
+
+    def cross(self, other: ctypes.c_void_p):
+        """"""
+        return c_lib.vec3_cross(self._ctx, other)
+
+    def normalize(self, ):
+        """"""
+        return c_lib.vec3_normalize(self._ctx, )
+
+    def get_x(self, ) -> int:
+        """"""
+        return c_lib.vec3_get_x(self._ctx, )
+
+    def get_y(self, ) -> int:
+        """"""
+        return c_lib.vec3_get_y(self._ctx, )
+
+    def get_z(self, ) -> int:
+        """"""
+        return c_lib.vec3_get_z(self._ctx, )
 
 
 

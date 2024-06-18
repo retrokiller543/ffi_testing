@@ -18,7 +18,6 @@ fn bindings_c() -> Result<(), Error> {
     Ok(())
 }
 
-
 fn main() {
     bindings_c().unwrap();
 }
