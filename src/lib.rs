@@ -66,7 +66,7 @@ pub fn benchmark_rust() -> f64 {
 
     // Perform the AES encryption iteratively in a single thread
     let cipher = Aes128::new(&key.into());
-    let block = data.clone();
+    let block = data;
     for _ in 0..ITERATIONS {
         cipher.encrypt_block(&mut block.into());
     }

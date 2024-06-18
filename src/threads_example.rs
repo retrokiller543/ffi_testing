@@ -20,11 +20,11 @@ async fn async_benchmark() -> f64 {
     // Spawn multiple tasks to perform the calculations concurrently
     let mut tasks = vec![];
     for _ in 0..THREADS {
-        let key = key.clone();
-        let data = data.clone();
+        let key = key;
+        let data = data;
         tasks.push(task::spawn(async move {
             let cipher = Aes128::new(&key.into());
-            let block = data.clone();
+            let block = data;
             for _ in 0..(ITERATIONS / THREADS) {
                 cipher.encrypt_block(&mut block.into());
             }
