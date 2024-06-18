@@ -26,34 +26,6 @@ use wasm_bindgen::prelude::*;
 use crate::wasm::set_panic_hook;
 
 #[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
-#[derive(Default, Debug, Clone, PartialEq, Eq)]
-#[cfg_attr(any(feature = "interoptopus", feature = "c-ffi"), repr(C))]
-#[cfg_attr(
-    any(feature = "interoptopus", feature = "c-ffi"),
-    interoptopus::ffi_type
-)]
-/// The basic struct we will call methods in our FFI layer.
-pub struct Vec3 {
-    x: i32,
-    y: i32,
-    z: i32,
-}
-
-#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
-pub fn init_logger() {
-    env_logger::init();
-}
-
-#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
-impl Vec3 {
-    pub fn new(x: i32, y: i32, z: i32) -> Vec3 {
-        #[cfg(feature = "wasm-bindgen")]
-        set_panic_hook();
-        Vec3 { x, y, z }
-    }
-}
-
-#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
 pub fn benchmark_rust() -> f64 {
     const ITERATIONS: usize = 100_000;
 
@@ -76,6 +48,34 @@ pub fn benchmark_rust() -> f64 {
 
     //println!("Rust (single-threaded with AES encryption): {} seconds", );
     (end - start).as_secs_f64()
+}
+
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+pub fn init_logger() {
+    env_logger::init();
+}
+
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+#[derive(Default, Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(any(feature = "interoptopus", feature = "c-ffi"), repr(C))]
+#[cfg_attr(
+    any(feature = "interoptopus", feature = "c-ffi"),
+    interoptopus::ffi_type
+)]
+/// The basic struct we will call methods in our FFI layer.
+pub struct Vec3 {
+    x: i32,
+    y: i32,
+    z: i32,
+}
+
+#[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]
+impl Vec3 {
+    pub fn new(x: i32, y: i32, z: i32) -> Vec3 {
+        #[cfg(feature = "wasm-bindgen")]
+        set_panic_hook();
+        Vec3 { x, y, z }
+    }
 }
 
 #[cfg_attr(feature = "wasm-bindgen", wasm_bindgen)]

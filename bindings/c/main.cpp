@@ -56,6 +56,8 @@ int main() {
     Vec3 vecB = Vec3::New(4, 5, 6);
     int res = vecA.Add(vecB.GetX(), vecB.GetY(), vecB.GetZ());
     printf("Addition of vecA and vecB: %d\n", res);
+    vecA.SetX(69);
+    printf("Set X of vecA to %d\n", vecA.GetX());
     //Vec3 cross = vecA.Cross(vecB.Context());
     //printf("Cross product of vecA and vecB: %d %d %d\n", cross.GetX(), cross.GetY(), cross.GetZ());
     #endif

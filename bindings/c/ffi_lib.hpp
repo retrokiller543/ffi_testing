@@ -298,19 +298,20 @@ class Vec3
             return Vec3::FromContext(&result);
         }
 
-        int GetX()
-        {
-            return vec3_get_x(_context);
+        int GetX() const {
+        return _context->x;
         }
 
-        int GetY()
-        {
-            return vec3_get_y(_context);
+        int GetY() const {
+            return _context->y;
         }
 
-        int GetZ()
-        {
-            return vec3_get_z(_context);
+        int GetZ() const {
+            return _context->z;
+        }
+
+        void SetX(int value) {
+            _context->x = value;
         }
 
         vec3* Context() const { return _context; }
